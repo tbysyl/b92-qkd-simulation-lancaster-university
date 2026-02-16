@@ -45,17 +45,20 @@ for j in range(average_num):
     discards = 0
     bob_key = []
     alice_key = []
+    alice_transmit = []
     for i in range(n):
         a = alice_base[i]
         b = bob_measure(alice_base[i])
 
         if b == None:
             discards += 1
+            alice_transmit.append(f"{a}X")
 
         if eve:
             a = eve_attack(a)
 
         if b is not None:
+            alice_transmit.append(a)
             alice_key.append(a)
             bob_key.append(b)
 
@@ -66,7 +69,7 @@ for j in range(average_num):
             qber = (difference / len(alice_key)) * 100
     
     print(f"[{j}]")
-    print(f"Alice sent: {alice_key}")
+    print(f"Alice sent: {alice_transmit}")
     print(f"Bob received: {bob_key}")
     print(f"Received length: {len(alice_key)}")
     print(f"Fails: {discards}")
